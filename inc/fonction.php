@@ -73,10 +73,10 @@ function gestion_image($image_name, $file)
         return false;
     }
 }
-function getAllEmpruntes()
+function getAllEmpruntes($nomEmprenteur)
 {
     $bdd = dbconnect();
-    $query = "SELECT * FROM v_emprunt_objet_membre_categorie";
+    $query = "SELECT * FROM v_emprunt_objet_membre_categorie where nom_membre_emprunteur = '" . mysqli_real_escape_string($bdd, $nomEmprenteur) . "' order by date_emprunt desc";
     $result = mysqli_query($bdd, $query);
     if (!$result) {
         die('Erreur lors de la récupération des emprunts : ' . mysqli_error($bdd));

@@ -22,9 +22,9 @@ $pdp = ($pdp == "default.png") ? "../assets/image/default.png" : "../assets/imag
                 <li class="nav-item text-light">
                     <a class="nav-link  text-light" aria-current="page" href="index.php">Home</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link text-light" href="addNewObject.php">Add new object</a>
-                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="fiche_membre.php">Fiche Membre</a>
+                </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link ">Disabled</a>
                 </li> -->
