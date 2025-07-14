@@ -205,3 +205,23 @@ function getOneObjet($id_objet)
     }
     return mysqli_fetch_assoc($result);
 }
+
+function getAllObjetsAvecInfos() {
+    $bdd = dbconnect();
+    $query = "SELECT o.id_objet, o.nom_objet, c.nom_categorie, m.nom AS nom_proprietaire
+              FROM final_objet o
+              JOIN final_categorie_objet c ON o.id_categorie = c.id_categorie
+              JOIN final_membre m ON o.id_membre = m.id_membre";
+
+    $result = mysqli_query($bdd, $query);
+    if (!$result) {
+        die("Erreur lors de la récupération des objets : " . mysqli_error($bdd));
+    }
+
+    $objets = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $objets[] = $row;
+    }
+
+    return $objets;
+}

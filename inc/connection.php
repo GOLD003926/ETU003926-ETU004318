@@ -5,7 +5,8 @@ function dbconnect()
 
     if ($connect === null) {
         // Modifier ici les paramètres de connexion
-        $connect = mysqli_connect('localhost', 'root', '', 'final_project');
+        //$connect = mysqli_connect('localhost', 'root', '', 'final_project');
+         $connect = mysqli_connect('localhost', 'ETU003926', '1S7L2tMW', 'db_s2_ETU003926');
         // 'root' = utilisateur MySQL/XAMPP
         // '' = mot de passe vide par défaut sous XAMPP
         // 'employees' = nom de la base que tu as importée
