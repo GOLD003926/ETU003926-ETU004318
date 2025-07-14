@@ -1,0 +1,16 @@
+.bg-sombre-Body{
+    background-color: rgb(36, 35, 35);
+}
+.bg-sombre-nav{
+    background-color: rgb(29, 28, 28);
+}
+.bg-sombre-table,
+.bg-sombre-table th,
+.bg-sombre-table td,
+.bg-sombre-table tr {
+    background-color: rgb(43, 42, 42) !important;
+    color: white;
+}
+.wide-dropdown {
+    width: 300px !important;
+}
