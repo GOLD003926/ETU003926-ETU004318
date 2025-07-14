@@ -37,7 +37,14 @@ CREATE TABLE final_emprunt (
     date_emprunt DATE NOT NULL,
     date_retour DATE
 );
-
+--creer 4 user
+INSERT INTO
+    final_membre (nom, date_naissance, email, mot_de_passe, ville, image_profil)
+VALUES
+    ('Alice Dupont', '1990-05-15', 'alice@gmail.com', '123','andoharanofotsy','default.png'),
+    ('Bob Martin', '1985-08-22', 'bob@gmail.com', '456','tana','default.png'),
+    ('Claire Dubois', '1992-12-03', 'claire@gmail.com','tana', '789','default.png'),
+    ('Bun Dun', '1992-12-03', 'bun@gmail.com', '711','tana','default.png');
 -- Catégories cohérentes
 INSERT INTO
     final_categorie_objet (nom_categorie)

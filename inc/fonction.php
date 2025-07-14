@@ -95,14 +95,22 @@ function getAllObjets()
 }
 function getInfoMembre($email)
 {
+    if (is_null($email)) {
+        return null;
+    }
+
     $bdd = dbconnect();
-    $query = sprintf("SELECT * FROM final_membre WHERE email = '%s'", mysqli_real_escape_string($bdd, $email));
+    $email_esc = mysqli_real_escape_string($bdd, $email);
+    $query = "SELECT * FROM final_membre WHERE email = '$email_esc'";
     $result = mysqli_query($bdd, $query);
+
     if (!$result) {
         die('Erreur lors de la récupération des informations du membre : ' . mysqli_error($bdd));
     }
+
     return mysqli_fetch_assoc($result);
 }
+
 function getImageObjet($id_objet)
 {
     $bdd = dbconnect();

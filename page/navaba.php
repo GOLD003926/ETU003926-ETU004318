@@ -1,22 +1,19 @@
-<?php 
+<?php
 session_start();
-$mail=$_SESSION['email'] ?? null;
-$membre=getInfoMembre($mail);
-$nom=$membre['nom'];
-$nom = strtoupper($nom);
-$pdp=$membre['image_profil'] ?? 'default.png';
-if ($pdp=="default.png") {
-    $pdp = "../assets/image/default.png";
-} else {
-    $pdp = "../assets/image/" . $pdp;
-}
+$mail = $_SESSION['email'] ?? null;
+$membre = getInfoMembre($mail);
 
+$nom = isset($membre['nom']) ? strtoupper($membre['nom']) : 'INVITÉ';
+
+$pdp = $membre['image_profil'] ?? 'default.png';
+$pdp = ($pdp == "default.png") ? "../assets/image/default.png" : "../assets/image/" . $pdp;
 ?>
+
 <nav class="navbar navbar-expand-lg bg-sombre-nav">
     <div class="container-fluid bg-sombre-nav">
         <a class="navbar-brand fw-bold text-light" href="#">
-        <img src="<?= $pdp ?>" alt="" style="width: 50px; height: 50px; border-radius: 50%;">    
-        <?= $nom ?></a>
+            <img src="<?= $pdp ?>" alt="" style="width: 50px; height: 50px; border-radius: 50%;">
+            <?= $nom ?></a>
         <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon text-light"></span>
         </button>
