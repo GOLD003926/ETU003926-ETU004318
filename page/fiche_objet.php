@@ -3,10 +3,8 @@ require('../inc/fonction.php');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-$liste = getAllObjets();
-if (isset($_POST['nom']) || isset($_POST['disponible']) || isset($_POST['categorie'])) {
-    // $liste=resultat_search();
-}
+$fiche = getOneObjet($_GET['idObjet']);
+$liste=getAllImagesObjet($_GET['idObjet']);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,27 +24,29 @@ if (isset($_POST['nom']) || isset($_POST['disponible']) || isset($_POST['categor
         <header>
             <?php include 'navaba.php' ?>
         </header>
-        <main>
-            <?php include 'search.php' ?>
+        <main class="mt-4">
+            <div class="alert alert-light bg-sombre-nav" role="alert">
+                <div class="col-12">
+                    <label for="formGroupExampleInput" class="form-label">Nom de l'objet : <?= $fiche['nom_objet'] ?></label>
+                </div>
+                <div class="col-12">
+                    <label for="formGroupExampleInput" class="form-label">Categorie de l'objet : <?= $fiche['nom_categorie'] ?></label>
+                </div>
+                <div class="col-12">
+                    <label for="formGroupExampleInput" class="form-label">Proprietaire : <?= $fiche['nom_proprietaire'] ?></label>
+                </div>
+            </div>
+            <h3><span class="badge bg-secondary">Images</span></h3>
             <div class="d-flex wrap justify-content-around flex-wrap">
                 <?php foreach ($liste as $list) {
-                    $image = getImageObjet($list['id_objet']);
-                    $image = "../assets/image/" . $image;
+                    $image = "../assets/image/" . $list;
                 ?>
-                    <a href="fiche_objet.php?idObjet=<?= $list['id_objet'] ?>" class="text-decoration-none text-dark">
                         <div class="card mt-2 mb-1" style="width: 18rem;">
-                            <img src="<?= $image ?>" class="card-img-top" alt="..." style="height: 200px; object-fit: cover;">
-                            <div class="card-body">
-                                <h6 class="card-title"><?php echo htmlspecialchars($list['nom_objet']); ?></h6>
-                                <h6 class="card-title">Categorie : <?php echo htmlspecialchars($list['nom_categorie']); ?></h6>
-                                <h6 class="card-title">Proprietaire : <?php echo htmlspecialchars($list['nom_proprietaire']); ?></h6>
-                            </div>
+                            <img src="<?= $image ?>" class="card-img-top" alt="..." style="max-height: 400px; object-fit: cover;">
                         </div>
-                    </a>
                 <?php
                 } ?>
             </div>
-
         </main>
         <footer>
 

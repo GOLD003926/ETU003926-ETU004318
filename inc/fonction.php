@@ -18,7 +18,7 @@ function verifie_connexion($email, $mdp)
     if (mysqli_num_rows($result) > 0) return true;
     return false;
 }
-function  creerUser($email,$nom,$mdp,$ville,$date_naissance,$pdp)
+function  creerUser($email, $nom, $mdp, $ville, $date_naissance, $pdp)
 {
     $bdd = dbconnect();
     $query = sprintf(
@@ -37,12 +37,12 @@ function  creerUser($email,$nom,$mdp,$ville,$date_naissance,$pdp)
         echo 'Erreur lors de la creation de l\'user dans la base de données : ' . mysqli_error($bdd);
     }
 }
-function gestion_image($video_name, $file)
+function gestion_image($image_name, $file)
 {
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
-    $uploadDir = __DIR__ . '/assets/image/';
+    $uploadDir = __DIR__ . '/../assets/image/';
     $maxSize = 20 * 1024 * 1024; // 20 Mo
     $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
@@ -62,7 +62,7 @@ function gestion_image($video_name, $file)
 
     // Renomme le fichier
     $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-    $newName = $video_name . '.' . $extension;
+    $newName = $image_name . '.' . $extension;
 
     // Déplace le fichier
     if (move_uploaded_file($file['tmp_name'], $uploadDir . $newName)) {
@@ -114,12 +114,94 @@ function getInfoMembre($email)
 function getImageObjet($id_objet)
 {
     $bdd = dbconnect();
-    $query = sprintf("SELECT nom_image FROM final_images_objet WHERE id_objet = '%s'", mysqli_real_escape_string($bdd, $id_objet));
+
+    $query = sprintf(
+        "SELECT nom_image FROM final_images_objet WHERE id_objet = '%s' LIMIT 1",
+        mysqli_real_escape_string($bdd, $id_objet)
+    );
+
+    $result = mysqli_query($bdd, $query);
+
+    if (!$result) {
+        die("Erreur lors de la récupération de l'image : " . mysqli_error($bdd));
+    }
+
+    $row = mysqli_fetch_assoc($result);
+    return $row ? $row['nom_image'] : 'default_objet.jpg';
+}
+function getAllImagesObjet($id_objet)
+{
+    $bdd = dbconnect();
+    $images = [];
+
+    $query = sprintf(
+        "SELECT nom_image FROM final_images_objet WHERE id_objet = '%s'",
+        mysqli_real_escape_string($bdd, $id_objet)
+    );
+
+    $result = mysqli_query($bdd, $query);
+
+    if (!$result) {
+        die("Erreur lors de la récupération des images : " . mysqli_error($bdd));
+    }
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $images[] = $row['nom_image'];
+    }
+
+    if (empty($images)) {
+        $images[] = 'default_objet.jpg';
+    }
+
+    return $images;
+}
+
+
+function getAllCategories()
+{
+    $bdd = dbconnect();
+    $query = "SELECT * FROM final_categorie_objet";
     $result = mysqli_query($bdd, $query);
     if (!$result) {
-        die('Erreur lors de la récupération de l\'image de l\'objet : ' . mysqli_error($bdd));
+        die('Erreur lors de la récupération des catégories : ' . mysqli_error($bdd));
     }
-    $row = mysqli_fetch_assoc($result);
-    return $row['nom_image'] ?? 'default.jpg';
-
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+function ajoutObjet($nom, $idCategorie, $idProprietaire, $imageName)
+{
+    $bdd = dbconnect();
+    $query = sprintf(
+        "INSERT INTO final_objet (nom_objet, id_categorie, id_membre) VALUES ('%s', '%s', '%s')",
+        mysqli_real_escape_string($bdd, $nom),
+        mysqli_real_escape_string($bdd, $idCategorie),
+        mysqli_real_escape_string($bdd, $idProprietaire)
+    );
+    if (mysqli_query($bdd, $query)) {
+        $idObjet = mysqli_insert_id($bdd);
+        if ($imageName) {
+            $queryImage = sprintf(
+                "INSERT INTO final_images_objet (id_objet, nom_image) VALUES ('%s', '%s')",
+                mysqli_real_escape_string($bdd, $idObjet),
+                mysqli_real_escape_string($bdd, $imageName)
+            );
+            mysqli_query($bdd, $queryImage);
+        }
+        return true;
+    } else {
+        echo 'Erreur lors de l\'ajout de l\'objet : ' . mysqli_error($bdd);
+        return false;
+    }
+}
+function getOneObjet($id_objet)
+{
+    $bdd = dbconnect();
+    $query = sprintf(
+        "SELECT * FROM v_objet_proprietaire_categorie WHERE id_objet = '%s'",
+        mysqli_real_escape_string($bdd, $id_objet)
+    );
+    $result = mysqli_query($bdd, $query);
+    if (!$result) {
+        die('Erreur lors de la récupération de l\'objet : ' . mysqli_error($bdd));
+    }
+    return mysqli_fetch_assoc($result);
 }
