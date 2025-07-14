@@ -53,6 +53,9 @@
                         </div>
                     </div>
                     <div class="col-12">
+            <label for="" class="form-label fw-bold"><a href="login.php">Vous avez deja un compte ?</a></label>
+                </div>
+                    <div class="col-12">
                         <button class="btn btn-primary" type="submit">Valider</button>
                     </div>
                 </form>

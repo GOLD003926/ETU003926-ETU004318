@@ -2,7 +2,8 @@
     background-color: rgb(36, 35, 35);
 }
 .bg-sombre-nav{
-    background-color: rgb(29, 28, 28);
+    background-color: rgb(43, 42, 42) !important;
+    color: white;
 }
 .bg-sombre-table,
 .bg-sombre-table th,

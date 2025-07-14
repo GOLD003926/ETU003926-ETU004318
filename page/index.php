@@ -3,7 +3,7 @@ require('../inc/fonction.php');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
+$liste=getAllObjets();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -25,22 +25,27 @@ error_reporting(E_ALL);
         </header>
         <main>
 
-            <table class="table">
+            <table class="table mt-5 .bg-sombre-table,
+bg-sombre-table th
+bg-sombre-table td
+bg-sombre-table tr">
                 <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                    <tr >
+                        <th class="text-warning" scope="col">Nom objet</th>
+                        <th class="text-warning" scope="col">Categorie</th>
+                        <th class="text-warning" scope="col">Proprietaire</th>
+                        <!-- <th scope="col">Date retour</th> -->
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
+                    <?php foreach ($liste as $list){ ?>
+                        <tr>
+                            <td scope="row"><?php echo htmlspecialchars($list['nom_objet']); ?></td>
+                            <td><?php echo htmlspecialchars($list['nom_categorie']); ?></td>
+                            <td><?php echo htmlspecialchars($list['nom_proprietaire']); ?></td>
+                            <!-- <td><?php echo htmlspecialchars($list['date_retour']); ?></td> -->
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
         </main>

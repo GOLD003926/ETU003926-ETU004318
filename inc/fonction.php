@@ -76,10 +76,30 @@ function gestion_image($video_name, $file)
 function getAllEmpruntes()
 {
     $bdd = dbconnect();
-    $query = "SELECT * FROM v_emprunt_objet_membre";
+    $query = "SELECT * FROM v_emprunt_objet_membre_categorie";
     $result = mysqli_query($bdd, $query);
     if (!$result) {
         die('Erreur lors de la récupération des emprunts : ' . mysqli_error($bdd));
     }
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+function getAllObjets()
+{
+    $bdd = dbconnect();
+    $query = "SELECT * FROM v_objet_proprietaire_categorie order by id_categorie";
+    $result = mysqli_query($bdd, $query);
+    if (!$result) {
+        die('Erreur lors de la récupération des emprunts : ' . mysqli_error($bdd));
+    }
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+function getInfoMembre($email)
+{
+    $bdd = dbconnect();
+    $query = sprintf("SELECT * FROM final_membre WHERE email = '%s'", mysqli_real_escape_string($bdd, $email));
+    $result = mysqli_query($bdd, $query);
+    if (!$result) {
+        die('Erreur lors de la récupération des informations du membre : ' . mysqli_error($bdd));
+    }
+    return mysqli_fetch_assoc($result);
 }
