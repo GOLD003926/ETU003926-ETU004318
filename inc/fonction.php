@@ -22,7 +22,7 @@ function  creerUser($email,$nom,$mdp,$ville,$date_naissance,$pdp)
 {
     $bdd = dbconnect();
     $query = sprintf(
-        "INSERT INTO final_membre (email, nom, mot_de_passe, ville, date_naissance, photo_profil) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
+        "INSERT INTO final_membre (email, nom, mot_de_passe, ville, date_naissance, image_profil) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
         mysqli_real_escape_string($bdd, $email),
         mysqli_real_escape_string($bdd, $nom),
         mysqli_real_escape_string($bdd, $mdp),
@@ -42,9 +42,9 @@ function gestion_image($video_name, $file)
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
-    $uploadDir = __DIR__ . '/assets/videos/';
+    $uploadDir = __DIR__ . '/assets/image/';
     $maxSize = 20 * 1024 * 1024; // 20 Mo
-    $allowedMimeTypes = ['video/mp4'];
+    $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
     // Vérifie la taille
     if ($file['size'] > $maxSize) {
@@ -72,4 +72,14 @@ function gestion_image($video_name, $file)
         echo "Échec du déplacement du fichier.";
         return false;
     }
+}
+function getAllEmpruntes()
+{
+    $bdd = dbconnect();
+    $query = "SELECT * FROM v_emprunt_objet_membre";
+    $result = mysqli_query($bdd, $query);
+    if (!$result) {
+        die('Erreur lors de la récupération des emprunts : ' . mysqli_error($bdd));
+    }
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
