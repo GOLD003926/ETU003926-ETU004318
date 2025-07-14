@@ -103,3 +103,15 @@ function getInfoMembre($email)
     }
     return mysqli_fetch_assoc($result);
 }
+function getImageObjet($id_objet)
+{
+    $bdd = dbconnect();
+    $query = sprintf("SELECT nom_image FROM final_images_objet WHERE id_objet = '%s'", mysqli_real_escape_string($bdd, $id_objet));
+    $result = mysqli_query($bdd, $query);
+    if (!$result) {
+        die('Erreur lors de la récupération de l\'image de l\'objet : ' . mysqli_error($bdd));
+    }
+    $row = mysqli_fetch_assoc($result);
+    return $row['nom_image'] ?? 'default.jpg';
+
+}

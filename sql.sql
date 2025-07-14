@@ -157,3 +157,11 @@ FROM
     final_emprunt e
     JOIN v_objet_proprietaire_categorie v ON e.id_objet = v.id_objet
     JOIN final_membre m ON e.id_membre = m.id_membre;
+--inserer image objet avec nom_image default_objet.jpg pour les 40 objets
+INSERT INTO
+    final_images_objet (id_objet, nom_image)
+SELECT
+    id_objet,
+    'default_objet.jpg'
+FROM
+    final_objet;

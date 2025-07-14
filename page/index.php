@@ -3,7 +3,7 @@ require('../inc/fonction.php');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-$liste=getAllObjets();
+$liste = getAllObjets();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -24,30 +24,23 @@ $liste=getAllObjets();
             <?php include 'navaba.php' ?>
         </header>
         <main>
+            <div class="d-flex wrap justify-content-around flex-wrap">
+                <?php foreach ($liste as $list) {
+                    $image=getImageObjet($list['id_objet']);
+                    $image="../assets/image/".$image;
+                ?>
+                    <div class="card mt-2 mb-1" style="width: 18rem;">
+                        <img src="<?= $image ?>" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h6 class="card-title"><?php echo htmlspecialchars($list['nom_objet']); ?></h6>
+                            <h6 class="card-title">Categorie : <?php echo htmlspecialchars($list['nom_categorie']); ?></h6>
+                            <h6 class="card-title">Proprietaire : <?php echo htmlspecialchars($list['nom_proprietaire']); ?></h6>
+                        </div>
+                    </div>
+                <?php
+                } ?>
+            </div>
 
-            <table class="table mt-5 .bg-sombre-table,
-bg-sombre-table th
-bg-sombre-table td
-bg-sombre-table tr">
-                <thead>
-                    <tr >
-                        <th class="text-warning" scope="col">Nom objet</th>
-                        <th class="text-warning" scope="col">Categorie</th>
-                        <th class="text-warning" scope="col">Proprietaire</th>
-                        <!-- <th scope="col">Date retour</th> -->
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($liste as $list){ ?>
-                        <tr>
-                            <td scope="row"><?php echo htmlspecialchars($list['nom_objet']); ?></td>
-                            <td><?php echo htmlspecialchars($list['nom_categorie']); ?></td>
-                            <td><?php echo htmlspecialchars($list['nom_proprietaire']); ?></td>
-                            <!-- <td><?php echo htmlspecialchars($list['date_retour']); ?></td> -->
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
         </main>
         <footer>
 
